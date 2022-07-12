@@ -1,19 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:location/location.dart';
+import 'package:lottie/lottie.dart';
 import 'dart:math';
 import 'package:vehicleassistant/user/petrolorder.dart';
 import 'package:vehicleassistant/user/rating.dart';
 import 'package:vehicleassistant/user/workreq.dart';
+import 'package:http/http.dart' as http;
+
+import '../constants/constant_data.dart';
 
 class Work extends StatelessWidget {
   Work({Key? key}) : super(key: key);
-  final userLocation = '11.304020540521964,75.75696906515643';
+  LocationData? userLocation;
   var wrk = [
-    {'name': 'wrk1', 'coordinates': '11.302800136009576,75.76851329200237'},
-    {'name': 'wrk2', 'coordinates': '11.3028001360095456,75.76851329300237'},
-    {'name': 'wrk3', 'coordinates': '11.3028001360095476,75.76851329200237'},
-    {'name': 'wrk4', 'coordinates': '11.3028001360095466,45.76851329200237'}
+    // {'workshop_name': 'wrk1', 'location': '11.302800136009576,75.76851329200237'},
   ];
   double calculateDistance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;
@@ -27,28 +31,80 @@ class Work extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView.builder(
-            itemCount: wrk.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Workreq()));
-                },
-                child: Card(
-                  child: ListTile(
-                    title: Text(wrk[index]['name']!),
-                    subtitle: Text(calculateDistance(
-                            double.parse(userLocation.split(',').first),
-                            double.parse(userLocation.split(',')[1]),
-                            double.parse(
-                                wrk[index]['coordinates']!.split(',').first),
-                            double.parse(
-                                wrk[index]['coordinates']!.split(',')[1]))
-                        .toString()),
-                  ),
-                ),
-              );
-            }));
+        body: SafeArea(
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Lottie.network(
+                "https://assets6.lottiefiles.com/packages/lf20_6wbxjhf1.json",
+                height: 250),
+          ),
+          FutureBuilder(
+              future: getData(),
+              builder: (context, AsyncSnapshot<String> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                wrk.sort((a, b) => calculateDistance(
+                        userLocation!.latitude,
+                        userLocation!.longitude,
+                        double.parse(a['location']!.split(',').first),
+                        double.parse(a['location']!.split(',')[1]))
+                    .round()
+                    .compareTo(calculateDistance(
+                        userLocation!.latitude,
+                        userLocation!.longitude,
+                        double.parse(b['location']!.split(',').first),
+                        double.parse(b['location']!.split(',')[1]))));
+                if (snapshot.hasData) {
+                  wrk = jsonDecode(snapshot.data!);
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: wrk.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Workreq(
+                                          workshopId:
+                                              wrk[index]['id'].toString(),
+                                        )));
+                          },
+                          child: Card(
+                            child: ListTile(
+                              title: Text(wrk[index]['workshop_name']!),
+                              subtitle: Text(
+                                  '${calculateDistance(userLocation!.latitude, userLocation!.longitude, double.parse(wrk[index]['location']!.split(',').first), double.parse(wrk[index]['location']!.split(',')[1])).toStringAsFixed(2)} Km'),
+                            ),
+                          ),
+                        );
+                      });
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text("something went wrong..."),
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }),
+        ],
+      ),
+    ));
+  }
+
+  Future<String> getData() async {
+    userLocation = await Location.instance.getLocation();
+
+    final result =
+        await http.get(Uri.parse('${ConstantData.baseUrl}workshopview'));
+    print('......................${result.body}');
+    return result.body;
   }
 }

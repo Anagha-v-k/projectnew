@@ -31,22 +31,22 @@ class _PorderState extends State<Porder> {
   Future<dynamic> order(BuildContext context, double amount) async {
     final spref = await SharedPreferences.getInstance();
     // print(usernamecontroller.text);
-    LocationData locData=await Location.instance.getLocation();
+    LocationData locData = await Location.instance.getLocation();
     final response =
         await post(Uri.parse(ConstantData.baseUrl + 'addfrequest'), body: {
       'customer': spref.getString('userid'),
-      'Petrolpump': widget.petrolId,
+      'Petrolpumb': widget.petrolId,
       'product': selected,
-      'location':'${locData.latitude},${locData.longitude}',
+      'location': '${locData.latitude},${locData.longitude}',
       'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
       'time': DateFormat('hh:mm:ss').format(DateTime.now()),
-      'status':'0',
+      'status': '0',
       'amount': amount.toString(),
       'phone_number': Phonecontroller.text,
     });
     final data = jsonDecode(response.body);
     print(data);
-    if (data!=null) {
+    if (data != null) {
       Navigator.pop(context);
       Fluttertoast.showToast(msg: 'successfully ordered!!!');
       Navigator.push(

@@ -13,11 +13,13 @@ var userId;
 var userType;
 getUserId() async {
   final sh = await SharedPreferences.getInstance();
+  // sh.setString('userid', '8');
+  // sh.setString('type', 'workshop');
   userId = sh.getString('userid');
   userType = sh.getString('type');
   print('going to $userType');
-  sh.setString('type', 'workshop');
-  sh.setString('userid', '2');
+  // sh.setString('type', 'workshop');
+  // sh.setString('userid', '2');
   return userId;
 }
 

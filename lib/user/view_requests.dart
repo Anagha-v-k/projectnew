@@ -10,8 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vehicleassistant/Models/petrol_request.dart';
 import 'package:vehicleassistant/constants/constant_data.dart';
 
-class Viewreq extends StatelessWidget {
-  Viewreq({Key? key}) : super(key: key);
+class ViewreqFromUser extends StatelessWidget {
+  ViewreqFromUser({Key? key}) : super(key: key);
   SharedPreferences? spref;
   Future<List<PetrolRequest>> getRequests() async {
     spref = await SharedPreferences.getInstance();
@@ -30,14 +30,10 @@ class Viewreq extends StatelessWidget {
             if (snap.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
             } else {
-              if (!snap.hasData) {
-                return Center(child: Text('no data'));
-              }
               List<PetrolRequest> filteredList = snap.data!.where((element) {
-                // print(
-                //     'id from data: ${element.Petrolpump} id of user: ${spref!.getString('userid')}');
-                return element.Petrolpump.toString() ==
-                        spref!.getString('userid') &&
+                print(
+                    'id from data: ${element.customer} id of user: ${spref!.getString('userid')}');
+                return element.customer == spref!.getString('userid') &&
                     element.date ==
                         DateFormat('yyyy-MM-dd').format(DateTime.now());
               }).toList();

@@ -5,6 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart';
 import 'package:location/location.dart';
+import 'package:vehicleassistant/screens/login_page.dart';
 import 'package:vehicleassistant/screens/workshop/whome.dart';
 
 import '../Models/authority_model.dart';
@@ -91,11 +92,11 @@ class _WrkRegState extends State<WrkReg> {
     final data = jsonDecode(response.body);
     print(response.body);
     if (data['result'] != false) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {
-            return Whome();
+            return LoginPage();
           },
         ),
       );
@@ -355,7 +356,7 @@ class _WrkRegState extends State<WrkReg> {
                       return 'textfield is empty';
                     }
                   },
-                  keyboardType: TextInputType.phone,
+                  // keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), label: Text('password')),
                 ),
@@ -372,7 +373,7 @@ class _WrkRegState extends State<WrkReg> {
                       return 'password does not match';
                     }
                   },
-                  keyboardType: TextInputType.phone,
+                  // keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       label: Text('confirm password')),

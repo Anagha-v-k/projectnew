@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:location/location.dart';
 import 'package:vehicleassistant/Models/authority_model.dart';
 import 'package:vehicleassistant/constants/constant_data.dart';
+import 'package:vehicleassistant/screens/login_page.dart';
 
 // import 'package:location/location.dart';
 import 'package:vehicleassistant/screens/petrolpumb/petrolhome.dart';
@@ -97,11 +98,11 @@ class _PregState extends State<Preg> {
     final data = jsonDecode(response.body);
     print(response.body);
     if (data['result'] != false) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {
-            return Phome();
+            return LoginPage();
           },
         ),
       );
@@ -113,6 +114,7 @@ class _PregState extends State<Preg> {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
             child: Form(
@@ -214,7 +216,10 @@ class _PregState extends State<Preg> {
                       builder: (context, snap) {
                         if (snap.connectionState == ConnectionState.waiting) {
                           return CircularProgressIndicator();
-                        } else {
+                        } else if (!snap.hasData) {
+                          return Text('No Authorities found');
+                        }
+                        {
                           return DropdownButton(
                               hint: Text('Authority name'),
                               value: auname,

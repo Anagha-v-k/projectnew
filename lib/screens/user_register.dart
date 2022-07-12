@@ -35,11 +35,11 @@ class UserReg extends StatelessWidget {
     final data = jsonDecode(response.body);
     print(response.body);
     if (data['result'] != false) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {
-            return Userhome();
+            return LoginPage();
           },
         ),
       );
@@ -82,11 +82,13 @@ class UserReg extends StatelessWidget {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'textfield is empty';
+                      } else if (!value.contains('/') || value.length != 12) {
+                        return 'license number not valid';
                       }
                     },
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        label: Text('licence number')),
+                        label: Text('license number')),
                   ),
                 ),
                 Padding(

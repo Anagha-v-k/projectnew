@@ -5,6 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart';
 import 'package:location/location.dart';
+import 'package:lottie/lottie.dart';
 import 'package:vehicleassistant/Models/petrol_pump.dart';
 import 'package:vehicleassistant/constants/constant_data.dart';
 import 'package:vehicleassistant/user/petrolorder.dart';
@@ -26,6 +27,7 @@ class Fuel extends StatelessWidget {
   }
 
   Future<List<PetrolPump>> getPetrolPumps() async {
+    print('object');
     userLocation = await Location.instance.getLocation();
     final response = await get(Uri.parse(ConstantData.baseUrl + 'petrolview'));
     final List data = jsonDecode(response.body);
@@ -37,12 +39,22 @@ class Fuel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder(
+        body: Stack(
+      children: [
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Lottie.network(
+              "https://assets6.lottiefiles.com/packages/lf20_ZXgMbf.json"),
+        ),
+        FutureBuilder(
             future: getPetrolPumps(),
             builder: (context, AsyncSnapshot<List<PetrolPump>> snapshot) {
-              if (!snapshot.hasData) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
-              } else {
+              } else if (!snapshot.hasData) {
+                return Center(child: Text('no data'));
+              }
+              {
                 return Padding(
                   padding: const EdgeInsets.all(20),
                   child: ListView.builder(
@@ -82,7 +94,9 @@ class Fuel extends StatelessWidget {
                       }),
                 );
               }
-            }));
+            }),
+      ],
+    ));
   }
 
   // sort() {

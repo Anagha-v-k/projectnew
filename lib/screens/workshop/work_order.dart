@@ -8,17 +8,18 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vehicleassistant/Models/petrol_request.dart';
+import 'package:vehicleassistant/Models/workshop_request.dart';
 import 'package:vehicleassistant/constants/constant_data.dart';
 
-class Viewreq extends StatelessWidget {
-  Viewreq({Key? key}) : super(key: key);
+class ViewWorkreqFromUser extends StatelessWidget {
+  ViewWorkreqFromUser({Key? key}) : super(key: key);
   SharedPreferences? spref;
-  Future<List<PetrolRequest>> getRequests() async {
+  Future<List<WorkshopRequest>> getRequests() async {
     spref = await SharedPreferences.getInstance();
-    final res = await get(Uri.parse(ConstantData.baseUrl + 'frequest_view'));
+    final res = await get(Uri.parse(ConstantData.baseUrl + 'Wrequest_view'));
     final List data = jsonDecode(res.body);
     print('f_request view $data');
-    return data.map((e) => PetrolRequest.fromJson(e)).toList();
+    return data.map((e) => WorkshopRequest.fromJson(e)).toList();
   }
 
   @override
@@ -26,21 +27,20 @@ class Viewreq extends StatelessWidget {
     return Scaffold(
       body: FutureBuilder(
           future: getRequests(),
-          builder: (context, AsyncSnapshot<List<PetrolRequest>> snap) {
+          builder: (context, AsyncSnapshot<List<WorkshopRequest>> snap) {
             if (snap.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
             } else {
-              if (!snap.hasData) {
-                return Center(child: Text('no data'));
-              }
-              List<PetrolRequest> filteredList = snap.data!.where((element) {
-                // print(
-                //     'id from data: ${element.Petrolpump} id of user: ${spref!.getString('userid')}');
-                return element.Petrolpump.toString() ==
-                        spref!.getString('userid') &&
-                    element.date ==
-                        DateFormat('yyyy-MM-dd').format(DateTime.now());
-              }).toList();
+              List<WorkshopRequest> filteredList = snap.data!;
+              // List<WorkshopRequest> filteredList = snap.data!.where((element) {
+              //   print(
+              //       'id from data: ${element.workshop} id of user: ${spref!.getString('userid')}');
+              //   return element.workshop == spref!.getString('userid');
+              //   // &&
+              //   //     element.date ==
+              //   //         DateFormat('yyyy-MM-dd').format(DateTime.now()
+              //   //         );
+              // }).toList();
               filteredList.sort((a, b) => a.date.compareTo(b.date));
               return ListView.builder(
                   itemCount: filteredList.length,
@@ -51,13 +51,31 @@ class Viewreq extends StatelessWidget {
                           launchUrl(Uri.parse(
                               'https://www.google.com/maps/search/?api=1&query=${filteredList[index].location.split(',').first},${filteredList[index].location.split(',').last}'));
                         },
-                        leading: CircleAvatar(
-                          radius: 40,
+                        // leading: CircleAvatar(
+                        //   radius: 40,
+                        //   child: Text('₹${1
+                        //       // double.parse(filteredList[index].vehicleModel).round()
+                        //       }'),
+                        // ),
+
+                        title: Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
-                              '₹${double.parse(filteredList[index].amount).round()}'),
+                              'complaint : ${filteredList[index].problem}'),
                         ),
-                        title: Text(filteredList[index].product),
-                        subtitle: Text(filteredList[index].phoneNumber),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                  'phone number : ${filteredList[index].phoneNumber}'),
+                              Text(
+                                  'vehicle model : ${filteredList[index].vehicleModel}'),
+                            ],
+                          ),
+                        ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
