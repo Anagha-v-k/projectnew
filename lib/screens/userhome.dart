@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vehicleassistant/screens/login_page.dart';
 import 'package:vehicleassistant/user/profile.dart';
+import 'package:vehicleassistant/user/repair_requests.dart';
 import 'package:vehicleassistant/user/view_requests.dart';
 
 import '../user/chat.dart';
@@ -18,30 +19,44 @@ class Userhome extends StatelessWidget {
     final deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       drawer: Drawer(
-          child: Column(
-        children: [
-          SizedBox(
-            height: 100,
-          ),
-          Card(
-            child: ListTile(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ViewreqFromUser()));
-              },
-              leading: Icon(Icons.history),
-              title: Text('petrol requests'),
+          child: SafeArea(
+            child: Column(
+                  children: [
+            const Padding(
+              padding:  EdgeInsets.all(30),
+              child: CircleAvatar(
+                radius: 100,
+                backgroundImage: NetworkImage(
+                    'https://www.globalassure.com/images/services/rsa.png'),
+              ),
             ),
-          ),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.history),
+            
+            Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ViewreqFromUser()));
+                },
+                leading: Icon(Icons.history),
+                title: Text('petrol requests'),
+              ),
             ),
-          ),
-        ],
-      )),
+            Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RepairRequests()));
+                },
+                leading: Icon(Icons.history),
+                title: Text('repair requests'),
+              ),
+            ),
+                  ],
+                ),
+          )),
       backgroundColor: Color.fromRGBO(234, 252, 252, 1),
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Vehicle Assistant'),
         actions: [
           IconButton(

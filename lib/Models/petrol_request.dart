@@ -1,7 +1,9 @@
 class PetrolRequest {
   PetrolRequest({
+    required this.id,
     required this.customer,
-    required this.Petrolpump,
+    required this.Petrolpumb,
+    required this.name,
     required this.product,
     required this.amount,
     required this.location,
@@ -10,8 +12,10 @@ class PetrolRequest {
     required this.status,
     required this.phoneNumber,
   });
+  late final int id;
   late final int customer;
-  late final int Petrolpump;
+  late final int Petrolpumb;
+  late final String name;
   late final String product;
   late final String amount;
   late final String location;
@@ -19,10 +23,12 @@ class PetrolRequest {
   late final String time;
   late final String status;
   late final String phoneNumber;
-
-  PetrolRequest.fromJson(Map<String, dynamic> json) {
+  
+  PetrolRequest.fromJson(Map<String, dynamic> json){
+    id = json['id'];
     customer = json['customer'];
-    Petrolpump = json['Petrolpump'];
+    Petrolpumb = json['Petrolpumb'];
+    name = json['name'];
     product = json['product'];
     amount = json['amount'];
     location = json['location'];
@@ -34,8 +40,10 @@ class PetrolRequest {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['id'] = id;
     _data['customer'] = customer;
-    _data['Petrolpump'] = Petrolpump;
+    _data['Petrolpumb'] = Petrolpumb;
+    _data['name'] = name;
     _data['product'] = product;
     _data['amount'] = amount;
     _data['location'] = location;

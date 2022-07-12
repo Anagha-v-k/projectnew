@@ -22,10 +22,11 @@ class LoginPage extends StatelessWidget {
   final formkey = GlobalKey<FormState>();
 
   login(BuildContext context) async {
+    print('working');
     final response = await post(Uri.parse(ConstantData.baseUrl + 'login_views'),
         body: {
-          'uname': usernamecontroller.text,
-          'pass': passwordcontroller.text
+          'uname': usernamecontroller.text.trim(),
+          'pass': passwordcontroller.text.trim(),
         });
     final data = jsonDecode(response.body);
     print('response' + response.body);

@@ -11,14 +11,14 @@ import 'package:vehicleassistant/Models/petrol_request.dart';
 import 'package:vehicleassistant/Models/workshop_request.dart';
 import 'package:vehicleassistant/constants/constant_data.dart';
 
-class ViewWorkreqFromUser extends StatefulWidget {
-  ViewWorkreqFromUser({Key? key}) : super(key: key);
+class RepairRequests extends StatefulWidget {
+  RepairRequests ({Key? key}) : super(key: key);
 
   @override
-  State<ViewWorkreqFromUser> createState() => _ViewWorkreqFromUserState();
+  State<RepairRequests > createState() => _ViewWorkreqFromUserState();
 }
 
-class _ViewWorkreqFromUserState extends State<ViewWorkreqFromUser> {
+class _ViewWorkreqFromUserState extends State<RepairRequests > {
   SharedPreferences? spref;
 
   Future<List<WorkshopRequest>> getRequests() async {
@@ -29,16 +29,17 @@ class _ViewWorkreqFromUserState extends State<ViewWorkreqFromUser> {
     return data.map((e) => WorkshopRequest.fromJson(e)).toList();
   }
 
-  accept(String id) async {
-    Response res = await patch(Uri.parse(ConstantData.baseUrl + 'Wstatus/$id'),
-        body: {'status': '1'});
-    print(res.body);
-    setState(() {});
-  }
+  // accept(String id) async {
+  //   Response res = await patch(Uri.parse(ConstantData.baseUrl + 'Wstatus/$id'),
+  //       body: {'status': '1'});
+  //   print(res.body);
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Repair requests'),),
       body: FutureBuilder(
           future: getRequests(),
           builder: (context, AsyncSnapshot<List<WorkshopRequest>> snap) {
@@ -76,52 +77,24 @@ class _ViewWorkreqFromUserState extends State<ViewWorkreqFromUser> {
                         //       }'),
                         // ),
 
-                        title: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                              'complaint : ${filteredList[index].problem}'),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  'phone number : ${filteredList[index].phoneNumber}'),
-                              Text('name : ${filteredList[index].name}'),
-                              Text(
+                        title: Text(
+                            'complaint : ${filteredList[index].problem}'),
+                        subtitle: Text(
                                   'vehicle model : ${filteredList[index].vehicleModel}'),
-                            ],
-                          ),
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    shadowColor: Colors.transparent,
-                                    primary: filteredList[index].status == '0'
-                                        ? Theme.of(context)
-                                            .primaryColor
-                                            .withAlpha(50)
-                                        : Colors.amber),
-                                onPressed: () {
-                                  accept(filteredList[index].id.toString());
-                                },
-                                child: Text(filteredList[index].status == '0'
-                                    ? 'Accept'
-                                    : 'Accepted')),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            // ElevatedButton(
-                            //     style: ElevatedButton.styleFrom(
-                            //         primary: Color.fromARGB(255, 255, 151, 53)),
-                            //     onPressed: () {},
-                            //     child: Text('Reject')),
-                          ],
-                        ),
+                        trailing: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shadowColor: Colors.transparent,
+                                primary: filteredList[index].status == '0'
+                                    ? Theme.of(context)
+                                        .primaryColor
+                                        .withAlpha(50)
+                                    : Colors.amber),
+                            onPressed: () {
+                              // accept(filteredList[index].id.toString());
+                            },
+                            child: Text(filteredList[index].status == '0'
+                                ? 'Pending'
+                                : 'Accepted')),
                       ),
                     );
                   });

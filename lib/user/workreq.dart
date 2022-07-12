@@ -20,6 +20,7 @@ class Workreq extends StatelessWidget {
   final problemcontroller = TextEditingController();
   final phonecontroller = TextEditingController();
   final vehicleTypeController = TextEditingController();
+  final nameController = TextEditingController();
 
   final formkey = GlobalKey<FormState>();
   order(BuildContext context) async {
@@ -29,6 +30,7 @@ class Workreq extends StatelessWidget {
         await post(Uri.parse(ConstantData.baseUrl + 'addwrequest'), body: {
       'customer': spref.getString('userid'),
       'workshop': workshopId,
+      'name': nameController.text,
       'location': '${loc.latitude},${loc.longitude}',
       'status': '0',
       'problem': problemcontroller.text,
@@ -107,12 +109,24 @@ class Workreq extends StatelessWidget {
                 padding: EdgeInsets.symmetric(
                     horizontal: 80, vertical: deviceHeight * .01),
                 child: TextFormField(
+                    controller: nameController,
+                    validator: (value) {},
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        label: Text('name'))),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 80, vertical: deviceHeight * .01),
+                child: TextFormField(
                     controller: phonecontroller,
                     validator: (value) {},
+                    keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         label: Text('phone number'))),
               ),
+              
               ElevatedButton(
                   onPressed: () {
                     if (formkey.currentState!.validate()) {

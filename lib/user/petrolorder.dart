@@ -24,39 +24,48 @@ class Porder extends StatefulWidget {
 class _PorderState extends State<Porder> {
   List items = ['petrol', 'diesel', 'adblue'];
   // final usernamecontroller = TextEditingController();
-  final amountcontroller = TextEditingController();
-  final Phonecontroller = TextEditingController();
+  final amountController = TextEditingController();
+  final PhoneController = TextEditingController();
+  final nameController = TextEditingController();
   final formkey = GlobalKey<FormState>();
   String? selected;
   Future<dynamic> order(BuildContext context, double amount) async {
     final spref = await SharedPreferences.getInstance();
     // print(usernamecontroller.text);
     LocationData locData = await Location.instance.getLocation();
-    final response =
+
+   try{ final response =
         await post(Uri.parse(ConstantData.baseUrl + 'addfrequest'), body: {
       'customer': spref.getString('userid'),
       'Petrolpumb': widget.petrolId,
       'product': selected,
+      'name': nameController.text,
       'location': '${locData.latitude},${locData.longitude}',
       'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
       'time': DateFormat('hh:mm:ss').format(DateTime.now()),
       'status': '0',
       'amount': amount.toString(),
-      'phone_number': Phonecontroller.text,
+      'phone_number': PhoneController.text,
     });
     final data = jsonDecode(response.body);
     print(data);
     if (data != null) {
-      Navigator.pop(context);
       Fluttertoast.showToast(msg: 'successfully ordered!!!');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return Userhome();
-          },
-        ),
-      );
+      if (!mounted) return;
+      Navigator.pop(context);
+      Navigator.pop(context);
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) {
+      //       return Userhome();
+      //     },
+      //   ),
+      // );
+    
+    }}on Exception catch(err){
+      Fluttertoast.showToast(msg: 'Something went wrong');
+      print('exception: $err');
     }
     return 0;
   }
@@ -92,7 +101,7 @@ class _PorderState extends State<Porder> {
             padding: EdgeInsets.symmetric(
                 horizontal: 80, vertical: deviceHeight * .01),
             child: TextFormField(
-              controller: amountcontroller,
+              controller: amountController,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'textfield is empty';
@@ -106,7 +115,7 @@ class _PorderState extends State<Porder> {
             padding: EdgeInsets.symmetric(
                 horizontal: 80, vertical: deviceHeight * .01),
             child: TextFormField(
-              controller: Phonecontroller,
+              controller: PhoneController,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'textfield is empty';
@@ -118,6 +127,20 @@ class _PorderState extends State<Porder> {
               decoration: InputDecoration(
                   border: OutlineInputBorder(), label: Text('phone number')),
             ),
+          ),Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: 80, vertical: deviceHeight * .01),
+            child: TextFormField(
+              controller: nameController,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'textfield is empty';
+                } 
+              },
+              keyboardType: TextInputType.name,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), label: Text('name')),
+            ),
           ),
           ElevatedButton(
               onPressed: () {
@@ -128,13 +151,13 @@ class _PorderState extends State<Porder> {
                         return AlertDialog(
                           title: Text('Grand Total'),
                           content: Text(
-                              '${amountcontroller.text}+$deliveryCharge = ${double.parse(amountcontroller.text) + deliveryCharge}'),
+                              '${amountController.text}+$deliveryCharge = ${double.parse(amountController.text) + deliveryCharge}'),
                           actions: [
                             TextButton(
                                 onPressed: () {
                                   order(
                                           context,
-                                          double.parse(amountcontroller.text) +
+                                          double.parse(amountController.text) +
                                               deliveryCharge)
                                       .then((_) => Navigator.pop(context));
                                 },

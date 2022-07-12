@@ -32,6 +32,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        useMaterial3: true,
+        // brightness: Brightness.dark,
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       home: FutureBuilder(
           future: getUserId(),
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
                 return Userhome();
               } else if (userType == 'workshop') {
                 return Whome();
-              } else if (userType == 'petrol pumb') {
+              } else if (userType == 'petrolpumb') {
                 return Phome();
               } else {
                 return LoginPage();

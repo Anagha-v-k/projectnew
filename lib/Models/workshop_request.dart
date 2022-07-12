@@ -1,7 +1,9 @@
 class WorkshopRequest {
   WorkshopRequest({
+    required this.id,
     required this.customer,
     required this.workshop,
+    required this.name,
     required this.location,
     required this.date,
     required this.time,
@@ -10,8 +12,10 @@ class WorkshopRequest {
     required this.problem,
     required this.vehicleModel,
   });
+  late final int id;
   late final int customer;
   late final int workshop;
+  late final String name;
   late final String location;
   late final String date;
   late final String time;
@@ -19,10 +23,12 @@ class WorkshopRequest {
   late final String phoneNumber;
   late final String problem;
   late final String vehicleModel;
-
-  WorkshopRequest.fromJson(Map<String, dynamic> json) {
+  
+  WorkshopRequest.fromJson(Map<String, dynamic> json){
+    id = json['id'];
     customer = json['customer'];
     workshop = json['workshop'];
+    name = json['name'];
     location = json['location'];
     date = json['date'];
     time = json['time'];
@@ -34,8 +40,10 @@ class WorkshopRequest {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['id'] = id;
     _data['customer'] = customer;
     _data['workshop'] = workshop;
+    _data['name'] = name;
     _data['location'] = location;
     _data['date'] = date;
     _data['time'] = time;

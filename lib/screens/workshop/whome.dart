@@ -4,6 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vehicleassistant/screens/workshop/change_status.dart';
 import 'package:vehicleassistant/screens/workshop/srevices.dart';
 import 'package:vehicleassistant/screens/workshop/work_order.dart';
 
@@ -18,6 +19,8 @@ class Whome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Vehicle Assistant'),
+        centerTitle: true,
         actions: [
           IconButton(
               onPressed: () async {
@@ -68,7 +71,8 @@ class Whome extends StatelessWidget {
             }).toList(),
           ),
           Container(
-            width: double.infinity,
+            width: 200,
+            height: 70,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -90,7 +94,7 @@ class Whome extends StatelessWidget {
           //   ),
           // ),
           Container(
-            width: double.infinity,
+            // width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -101,11 +105,11 @@ class Whome extends StatelessWidget {
             ),
           ),
           Container(
-            width: double.infinity,
+            // width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Servman();
+                  return ChangeStatus();
                 }));
               },
               child: Text('add status'),
