@@ -12,14 +12,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vehicleassistant/Models/petrol_request.dart';
 import 'package:vehicleassistant/constants/constant_data.dart';
 
-class Viewreq extends StatefulWidget {
-  Viewreq({Key? key}) : super(key: key);
+class DeliveringItems extends StatefulWidget {
+  DeliveringItems({Key? key}) : super(key: key);
 
   @override
-  State<Viewreq> createState() => _ViewreqState();
+  State<DeliveringItems> createState() => _ViewreqState();
 }
 
-class _ViewreqState extends State<Viewreq> {
+class _ViewreqState extends State<DeliveringItems> {
   SharedPreferences? spref;
 
   Future<List<PetrolRequest>> getRequests() async {

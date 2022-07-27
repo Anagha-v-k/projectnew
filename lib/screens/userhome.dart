@@ -7,6 +7,7 @@ import 'package:vehicleassistant/screens/login_page.dart';
 import 'package:vehicleassistant/user/profile.dart';
 import 'package:vehicleassistant/user/repair_requests.dart';
 import 'package:vehicleassistant/user/view_requests.dart';
+import 'package:vehicleassistant/user/view_spare.dart';
 
 import '../user/chat.dart';
 import '../user/fuel.dart';
@@ -20,22 +21,23 @@ class Userhome extends StatelessWidget {
     return Scaffold(
       drawer: Drawer(
           child: SafeArea(
-            child: Column(
-                  children: [
+        child: Column(
+          children: [
             const Padding(
-              padding:  EdgeInsets.all(30),
+              padding: EdgeInsets.all(30),
               child: CircleAvatar(
                 radius: 100,
                 backgroundImage: NetworkImage(
                     'https://www.globalassure.com/images/services/rsa.png'),
               ),
             ),
-            
             Card(
               child: ListTile(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ViewreqFromUser()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ViewreqFromUser()));
                 },
                 leading: Icon(Icons.history),
                 title: Text('petrol requests'),
@@ -44,16 +46,18 @@ class Userhome extends StatelessWidget {
             Card(
               child: ListTile(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RepairRequests()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RepairRequests()));
                 },
                 leading: Icon(Icons.history),
                 title: Text('repair requests'),
               ),
             ),
-                  ],
-                ),
-          )),
+          ],
+        ),
+      )),
       backgroundColor: Color.fromRGBO(234, 252, 252, 1),
       appBar: AppBar(
         centerTitle: true,
@@ -111,6 +115,15 @@ class Userhome extends StatelessWidget {
                 },
                 leading: Icon(Icons.forum),
                 title: Text('Chat with mechanics'),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ViewSpare();
+                  }));
+                },
+                leading: Icon(Icons.shopping_cart),
+                title: Text('Order Spare Parts'),
               ),
               ListTile(
                 onTap: () {

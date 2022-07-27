@@ -34,36 +34,38 @@ class _PorderState extends State<Porder> {
     // print(usernamecontroller.text);
     LocationData locData = await Location.instance.getLocation();
 
-   try{ final response =
-        await post(Uri.parse(ConstantData.baseUrl + 'addfrequest'), body: {
-      'customer': spref.getString('userid'),
-      'Petrolpumb': widget.petrolId,
-      'product': selected,
-      'name': nameController.text,
-      'location': '${locData.latitude},${locData.longitude}',
-      'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      'time': DateFormat('hh:mm:ss').format(DateTime.now()),
-      'status': '0',
-      'amount': amount.toString(),
-      'phone_number': PhoneController.text,
-    });
-    final data = jsonDecode(response.body);
-    print(data);
-    if (data != null) {
-      Fluttertoast.showToast(msg: 'successfully ordered!!!');
-      if (!mounted) return;
-      Navigator.pop(context);
-      Navigator.pop(context);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) {
-      //       return Userhome();
-      //     },
-      //   ),
-      // );
-    
-    }}on Exception catch(err){
+    try {
+      final response =
+          await post(Uri.parse(ConstantData.baseUrl + 'addfrequest'), body: {
+        'customer': spref.getString('userid'),
+        'Petrolpumb': widget.petrolId,
+        'product': selected,
+        'name': nameController.text,
+        'location': '${locData.latitude},${locData.longitude}',
+        'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        'time': DateFormat('hh:mm:ss').format(DateTime.now()),
+        'status': '0',
+        'amount': amount.toString(),
+        'phone_number': PhoneController.text,
+      });
+      final data = jsonDecode(response.body);
+      print('resss $data');
+      if (data != null) {
+        Fluttertoast.showToast(msg: 'successfully ordered!!!');
+        if (!mounted) return;
+        Navigator.pop(context);
+        Navigator.pop(context);
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) {
+        //       return Userhome();
+        //     },
+        //   ),
+        // );
+
+      }
+    } on Exception catch (err) {
       Fluttertoast.showToast(msg: 'Something went wrong');
       print('exception: $err');
     }
@@ -127,7 +129,8 @@ class _PorderState extends State<Porder> {
               decoration: InputDecoration(
                   border: OutlineInputBorder(), label: Text('phone number')),
             ),
-          ),Padding(
+          ),
+          Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: 80, vertical: deviceHeight * .01),
             child: TextFormField(
@@ -135,7 +138,7 @@ class _PorderState extends State<Porder> {
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'textfield is empty';
-                } 
+                }
               },
               keyboardType: TextInputType.name,
               decoration: InputDecoration(

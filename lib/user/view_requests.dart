@@ -29,11 +29,13 @@ class _ViewreqState extends State<ViewreqFromUser> {
     return data.map((e) => PetrolRequest.fromJson(e)).toList();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Fuel requests'),centerTitle: true,),
+      appBar: AppBar(
+        title: Text('Fuel requests'),
+        centerTitle: true,
+      ),
       body: FutureBuilder(
           future: getRequests(),
           builder: (context, AsyncSnapshot<List<PetrolRequest>> snap) {
@@ -46,7 +48,7 @@ class _ViewreqState extends State<ViewreqFromUser> {
               List<PetrolRequest> filteredList = snap.data!.where((element) {
                 // print(
                 //     'id from data: ${element.Petrolpump} id of user: ${spref!.getString('userid')}');
-                return  element.customer.toString() ==
+                return element.customer.toString() ==
                         spref!.getString('userid') &&
                     element.date ==
                         DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -54,16 +56,15 @@ class _ViewreqState extends State<ViewreqFromUser> {
               filteredList.sort((a, b) => a.date.compareTo(b.date));
               return ListView.builder(
                   itemCount: filteredList.length,
-                  
                   itemBuilder: (context, index) {
-                    filteredList.sort((a,b){
-                     return a.status.compareTo(b.status);
+                    filteredList.sort((a, b) {
+                      return a.status.compareTo(b.status);
                     });
                     return Card(
                       child: ListTile(
                         onTap: () {
-                          launchUrl(Uri.parse(
-                              'https://www.google.com/maps/search/?api=1&query=${filteredList[index].location.split(',').first},${filteredList[index].location.split(',').last}'));
+                          // launchUrl(Uri.parse(
+                          //     'https://www.google.com/maps/search/?api=1&query=${filteredList[index].location.split(',').first},${filteredList[index].location.split(',').last}'));
                         },
                         contentPadding: EdgeInsets.all(10),
                         leading: CircleAvatar(
@@ -71,30 +72,30 @@ class _ViewreqState extends State<ViewreqFromUser> {
                           child: Text(
                               '₹${double.parse(filteredList[index].amount).round()}'),
                         ),
-                        title: Text(filteredList[index].product .toString()),
-                        // subtitle: Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   mainAxisSize: MainAxisSize.min,
-                        //   children: [
-                        //     // Padding(
-                        //     //   padding: const EdgeInsets.all(8.0),
-                        //     //   child: Text(filteredList[index].product),
-                        //     // ),
-                        //     Row(
-                        //       mainAxisSize: MainAxisSize.min,
-                        //       children: [
-                        //         Icon(Icons.call),
-                        //         Text(filteredList[index].phoneNumber),
-                        //       ],
-                        //     ),
-                        //   ],
-                        // ),
+                        title: Text(filteredList[index].product.toString()),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(filteredList[index].Petrolpumb1),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.call),
+                                Text(filteredList[index].phoneNumber),
+                              ],
+                            ),
+                          ],
+                        ),
                         trailing: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 primary: filteredList[index].status == '1'
                                     ? Colors.amber
                                     : Colors.green),
-                            onPressed: (){},
+                            onPressed: () {},
                             child: Text(filteredList[index].status == '1'
                                 ? 'Accepted'
                                 : 'Pending')),

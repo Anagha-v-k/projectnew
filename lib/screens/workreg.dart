@@ -85,8 +85,8 @@ class _WrkRegState extends State<WrkReg> {
           'owner_name': ownernamecontroller.text,
           'location': locationcontroller.text,
           'district': selectedDistrict,
-          'authority_type': type,
-          'authority_name': auname,
+          // 'authority_type': type,
+          // 'authority_name': auname,
           'type': 'workshop'
         });
     final data = jsonDecode(response.body);
@@ -192,24 +192,24 @@ class _WrkRegState extends State<WrkReg> {
                       });
                     }),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 100, vertical: deviceHeight * .002),
-                child: DropdownButton(
-                    hint: Text('Authority type'),
-                    value: type,
-                    items: authority
-                        .map((e) => DropdownMenuItem(
-                              child: Text(e),
-                              value: e,
-                            ))
-                        .toList(),
-                    onChanged: (v) {
-                      setState(() {
-                        type = v as String;
-                      });
-                    }),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(
+              //       horizontal: 100, vertical: deviceHeight * .002),
+              //   child: DropdownButton(
+              //       hint: Text('Authority type'),
+              //       value: type,
+              //       items: authority
+              //           .map((e) => DropdownMenuItem(
+              //                 child: Text(e),
+              //                 value: e,
+              //               ))
+              //           .toList(),
+              //       onChanged: (v) {
+              //         setState(() {
+              //           type = v as String;
+              //         });
+              //       }),
+              // ),
               // Padding(
               //   padding: EdgeInsets.symmetric(
               //       horizontal: 80, vertical: deviceHeight * .001),
@@ -219,36 +219,36 @@ class _WrkRegState extends State<WrkReg> {
               //         label: Text('Authority name')),
               //   ),
               // ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 90, vertical: deviceHeight * .001),
-                child: FutureBuilder(
-                    future: getData(),
-                    builder: (context, snap) {
-                      if (snap.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
-                      } else {
-                        return DropdownButton(
-                            hint: Text('Authority name'),
-                            value: auname,
-                            items: (snap.data as List<Authority>)
-                                // []
-                                .where((element) =>
-                                    element.district == selectedDistrict &&
-                                    element.AuthorityType == type)
-                                .map((e) => DropdownMenuItem(
-                                      child: Text(e.name),
-                                      value: e.name,
-                                    ))
-                                .toList(),
-                            onChanged: (v) {
-                              setState(() {
-                                auname = v as String;
-                              });
-                            });
-                      }
-                    }),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(
+              //       horizontal: 90, vertical: deviceHeight * .001),
+              //   child: FutureBuilder(
+              //       future: getData(),
+              //       builder: (context, snap) {
+              //         if (snap.connectionState == ConnectionState.waiting) {
+              //           return CircularProgressIndicator();
+              //         } else {
+              //           return DropdownButton(
+              //               hint: Text('Authority name'),
+              //               value: auname,
+              //               items: (snap.data as List<Authority>)
+              //                   // []
+              //                   .where((element) =>
+              //                       element.district == selectedDistrict &&
+              //                       element.AuthorityType == type)
+              //                   .map((e) => DropdownMenuItem(
+              //                         child: Text(e.name),
+              //                         value: e.name,
+              //                       ))
+              //                   .toList(),
+              //               onChanged: (v) {
+              //                 setState(() {
+              //                   auname = v as String;
+              //                 });
+              //               });
+              //         }
+              //       }),
+              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -291,6 +291,7 @@ class _WrkRegState extends State<WrkReg> {
                       return 'enter a avlid phone number';
                     }
                   },
+                  keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       label: Text('phone number')),

@@ -8,6 +8,8 @@ import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vehicleassistant/user/rating.dart';
+import 'package:vehicleassistant/user/view_spare.dart';
 import 'package:vehicleassistant/user/work.dart';
 
 import '../constants/constant_data.dart';
@@ -70,7 +72,9 @@ class Workreq extends StatelessWidget {
               ListTile(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return Fuel();
+                    return Rating(
+                      workshopId: workshopId,
+                    );
                   }));
                 },
                 leading: Icon(Icons.local_gas_station),
@@ -79,7 +83,7 @@ class Workreq extends StatelessWidget {
               ListTile(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return Work();
+                    return ViewSpare();
                   }));
                 },
                 leading: Icon(Icons.build),
@@ -112,8 +116,7 @@ class Workreq extends StatelessWidget {
                     controller: nameController,
                     validator: (value) {},
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        label: Text('name'))),
+                        border: OutlineInputBorder(), label: Text('name'))),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -126,7 +129,6 @@ class Workreq extends StatelessWidget {
                         border: OutlineInputBorder(),
                         label: Text('phone number'))),
               ),
-              
               ElevatedButton(
                   onPressed: () {
                     if (formkey.currentState!.validate()) {

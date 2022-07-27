@@ -4,8 +4,11 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vehicleassistant/screens/workshop/add_spares.dart';
 import 'package:vehicleassistant/screens/workshop/change_status.dart';
 import 'package:vehicleassistant/screens/workshop/srevices.dart';
+import 'package:vehicleassistant/screens/workshop/view_feedback.dart';
+import 'package:vehicleassistant/screens/workshop/view_spare_requests.dart';
 import 'package:vehicleassistant/screens/workshop/work_order.dart';
 
 import '../../user/fuel.dart';
@@ -18,6 +21,32 @@ class Whome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200,
+            ),
+            // Card(
+            //   child: ListTile(
+            //     onTap: () {},
+            //     title: Text('feedbacks'),
+            //   ),
+            // ),
+            Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ViewSpareRequest()));
+                },
+                title: Text('Order requests'),
+              ),
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: Text('Vehicle Assistant'),
         centerTitle: true,
@@ -70,16 +99,35 @@ class Whome extends StatelessWidget {
               );
             }).toList(),
           ),
-          Container(
-            width: 200,
-            height: 70,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ViewWorkreqFromUser();
-                }));
-              },
-              child: Text('view orders'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 200,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ViewWorkreqFromUser();
+                  }));
+                },
+                child: Text('view orders'),
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 200,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AddSpares();
+                  }));
+                },
+                child: Text('add spare parts'),
+              ),
             ),
           ),
           // Container(
@@ -93,26 +141,36 @@ class Whome extends StatelessWidget {
           //     child: Text('add services'),
           //   ),
           // ),
-          Container(
-            // width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Servman();
-                }));
-              },
-              child: Text('view feedback'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 50,
+              width: 200,
+              // width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ViewFeedback();
+                  }));
+                },
+                child: Text('view feedback'),
+              ),
             ),
           ),
-          Container(
-            // width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ChangeStatus();
-                }));
-              },
-              child: Text('add status'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 50,
+              width: 200,
+              // width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ChangeStatus();
+                  }));
+                },
+                child: Text('add status'),
+              ),
             ),
           ),
         ],

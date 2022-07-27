@@ -12,13 +12,13 @@ import 'package:vehicleassistant/Models/workshop_request.dart';
 import 'package:vehicleassistant/constants/constant_data.dart';
 
 class RepairRequests extends StatefulWidget {
-  RepairRequests ({Key? key}) : super(key: key);
+  RepairRequests({Key? key}) : super(key: key);
 
   @override
-  State<RepairRequests > createState() => _ViewWorkreqFromUserState();
+  State<RepairRequests> createState() => _ViewWorkreqFromUserState();
 }
 
-class _ViewWorkreqFromUserState extends State<RepairRequests > {
+class _ViewWorkreqFromUserState extends State<RepairRequests> {
   SharedPreferences? spref;
 
   Future<List<WorkshopRequest>> getRequests() async {
@@ -39,7 +39,9 @@ class _ViewWorkreqFromUserState extends State<RepairRequests > {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Repair requests'),),
+      appBar: AppBar(
+        title: Text('Repair requests'),
+      ),
       body: FutureBuilder(
           future: getRequests(),
           builder: (context, AsyncSnapshot<List<WorkshopRequest>> snap) {
@@ -67,8 +69,8 @@ class _ViewWorkreqFromUserState extends State<RepairRequests > {
                     return Card(
                       child: ListTile(
                         onTap: () {
-                          launchUrl(Uri.parse(
-                              'https://www.google.com/maps/search/?api=1&query=${filteredList[index].location.split(',').first},${filteredList[index].location.split(',').last}'));
+                          // launchUrl(Uri.parse(
+                          //     'https://www.google.com/maps/search/?api=1&query=${filteredList[index].location.split(',').first},${filteredList[index].location.split(',').last}'));
                         },
                         // leading: CircleAvatar(
                         //   radius: 40,
@@ -77,10 +79,15 @@ class _ViewWorkreqFromUserState extends State<RepairRequests > {
                         //       }'),
                         // ),
 
-                        title: Text(
-                            'complaint : ${filteredList[index].problem}'),
-                        subtitle: Text(
-                                  'vehicle model : ${filteredList[index].vehicleModel}'),
+                        title:
+                            Text('Workshop : ${filteredList[index].workshop1}'),
+                        subtitle: Column(
+                          children: [
+                            Text('complaint : ${filteredList[index].problem}'),
+                            Text(
+                                'vehicle model : ${filteredList[index].vehicleModel}'),
+                          ],
+                        ),
                         trailing: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 shadowColor: Colors.transparent,

@@ -29,8 +29,8 @@ class _PregState extends State<Preg> {
   final companynamecontroller = TextEditingController();
   final ownernamecontroller = TextEditingController();
   final districtcontroller = TextEditingController();
-  final authtypecontroller = TextEditingController();
-  final authnamecontroller = TextEditingController();
+  // final authtypecontroller = TextEditingController();
+  // final authnamecontroller = TextEditingController();
   final startcontroller = TextEditingController();
   final endcontroller = TextEditingController();
 
@@ -89,10 +89,10 @@ class _PregState extends State<Preg> {
           'owner_name': ownernamecontroller.text,
           'district': selectedDistrict,
           'location': locationcontroller.text,
-          'authority_type': type,
-          'authority_name': auname,
-          'start_time': startcontroller.text,
-          'end_time': endcontroller.text,
+          // 'authority_type': type,
+          // 'authority_name': auname,
+          // 'start_time': startcontroller.text,
+          // 'end_time': endcontroller.text,
           'type': 'petrolpumb'
         });
     final data = jsonDecode(response.body);
@@ -114,6 +114,7 @@ class _PregState extends State<Preg> {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 207, 184, 201),
       appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -180,24 +181,24 @@ class _PregState extends State<Preg> {
                       });
                     }),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 100, vertical: deviceHeight * .002),
-                child: DropdownButton(
-                    hint: Text('Authority type'),
-                    value: type,
-                    items: authority
-                        .map((e) => DropdownMenuItem(
-                              child: Text(e),
-                              value: e,
-                            ))
-                        .toList(),
-                    onChanged: (v) {
-                      setState(() {
-                        type = v as String;
-                      });
-                    }),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(
+              //       horizontal: 100, vertical: deviceHeight * .002),
+              //   child: DropdownButton(
+              //       hint: Text('Authority type'),
+              //       value: type,
+              //       items: authority
+              //           .map((e) => DropdownMenuItem(
+              //                 child: Text(e),
+              //                 value: e,
+              //               ))
+              //           .toList(),
+              //       onChanged: (v) {
+              //         setState(() {
+              //           type = v as String;
+              //         });
+              //       }),
+              // ),
               // Padding(
               //   padding: EdgeInsets.symmetric(
               //       horizontal: 80, vertical: deviceHeight * .001),
@@ -208,37 +209,37 @@ class _PregState extends State<Preg> {
               //   ),
               // ),
 
-              Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 90, vertical: deviceHeight * .001),
-                  child: FutureBuilder(
-                      future: getData(),
-                      builder: (context, snap) {
-                        if (snap.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (!snap.hasData) {
-                          return Text('No Authorities found');
-                        }
-                        {
-                          return DropdownButton(
-                              hint: Text('Authority name'),
-                              value: auname,
-                              items: (snap.data as List<Authority>)
-                                  .where((element) =>
-                                      element.district == selectedDistrict &&
-                                      element.AuthorityType == type)
-                                  .map((e) => DropdownMenuItem(
-                                        child: Text(e.name),
-                                        value: e.name,
-                                      ))
-                                  .toList(),
-                              onChanged: (v) {
-                                setState(() {
-                                  auname = v as String;
-                                });
-                              });
-                        }
-                      })),
+              // Padding(
+              //     padding: EdgeInsets.symmetric(
+              //         horizontal: 90, vertical: deviceHeight * .001),
+              //     child: FutureBuilder(
+              //         future: getData(),
+              //         builder: (context, snap) {
+              //           if (snap.connectionState == ConnectionState.waiting) {
+              //             return CircularProgressIndicator();
+              //           } else if (!snap.hasData) {
+              //             return Text('No Authorities found');
+              //           }
+              //           {
+              //             return DropdownButton(
+              //                 hint: Text('Authority name'),
+              //                 value: auname,
+              //                 items: (snap.data as List<Authority>)
+              //                     .where((element) =>
+              //                         element.district == selectedDistrict &&
+              //                         element.AuthorityType == type)
+              //                     .map((e) => DropdownMenuItem(
+              //                           child: Text(e.name),
+              //                           value: e.name,
+              //                         ))
+              //                     .toList(),
+              //                 onChanged: (v) {
+              //                   setState(() {
+              //                     auname = v as String;
+              //                   });
+              //                 });
+              //           }
+              //         })),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
