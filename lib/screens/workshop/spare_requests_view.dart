@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vehicleassistant/Models/petrol_request.dart';
 import 'package:vehicleassistant/constants/constant_data.dart';
+import 'package:vehicleassistant/screens/workshop/change_status.dart';
 
 class ViewSpareRequests extends StatefulWidget {
   ViewSpareRequests({Key? key}) : super(key: key);
@@ -31,6 +32,7 @@ class _ViewreqState extends State<ViewSpareRequests> {
         await http.get(Uri.parse(ConstantData.baseUrl + 'frequest_view'));
     final List data = jsonDecode(res.body);
     print('f_request view $data');
+
     return data.map((e) => PetrolRequest.fromJson(e)).toList();
   }
 
@@ -97,11 +99,13 @@ class _ViewreqState extends State<ViewSpareRequests> {
                         ),
                         trailing: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary: filteredList[index].status == '1'
+                                primary: filteredList[index].status == 'pending'
                                     ? Colors.amber
                                     : Colors.green),
-                            onPressed: () {},
-                            child: Text(filteredList[index].status == '1'
+                            onPressed: () {
+                              // toggleStatus(filteredList[index].id.toString());
+                            },
+                            child: Text(filteredList[index].status == 'pending'
                                 ? 'Accepted'
                                 : 'Pending')),
                       ),

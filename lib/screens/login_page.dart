@@ -23,11 +23,11 @@ class LoginPage extends StatelessWidget {
 
   login(BuildContext context) async {
     print('working');
-    final response = await post(Uri.parse(ConstantData.baseUrl + 'login_views'),
-        body: {
-          'uname': usernamecontroller.text.trim(),
-          'pass': passwordcontroller.text.trim(),
-        });
+    final response =
+        await post(Uri.parse(ConstantData.baseUrl + 'login_views'), body: {
+      'uname': usernamecontroller.text.trim(),
+      'pass': passwordcontroller.text.trim(),
+    });
     final data = jsonDecode(response.body);
     print('response' + response.body);
     if (data['result'] != false) {
@@ -107,6 +107,7 @@ class LoginPage extends StatelessWidget {
                         return 'password is too short';
                       }
                     },
+                    obscureText: true,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), label: Text('Password')),
                   ),

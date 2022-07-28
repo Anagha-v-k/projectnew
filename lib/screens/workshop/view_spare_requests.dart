@@ -7,15 +7,41 @@ import 'package:http/http.dart';
 import 'package:vehicleassistant/Models/spare_request_model.dart';
 import 'package:vehicleassistant/constants/constant_data.dart';
 
-class ViewSpareRequest extends StatelessWidget {
+class ViewSpareRequest extends StatefulWidget {
   const ViewSpareRequest({Key? key}) : super(key: key);
 
+  @override
+  State<ViewSpareRequest> createState() => _ViewSpareRequestState();
+}
+
+class _ViewSpareRequestState extends State<ViewSpareRequest> {
   Future<List<SpareRequest>> getRequests() async {
     Response res =
         await get(Uri.parse(ConstantData.baseUrl + 'view_sparerequest'));
     List data = jsonDecode(res.body);
     print(data);
     return data.map((e) => SpareRequest.fromJson(e)).toList();
+  }
+
+  var status = 'pending';
+
+  toggleStatus(String id) async {
+    print(id);
+    if (status == 'pending') {
+      status = 'accepted';
+      Response res = await patch(
+          Uri.parse(ConstantData.baseUrl + 'Sparestatus/${id}'),
+          body: {'status': 'accepeted'});
+    } else {
+      status = 'pending';
+
+      Response res = await patch(
+          Uri.parse(ConstantData.baseUrl + 'Sparestatus/${id}'),
+          body: {'status': 'pending'});
+    }
+
+    setState(() {});
+    // print(res.body);
   }
 
   @override
@@ -32,8 +58,17 @@ class ViewSpareRequest extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      trailing: Chip(
-                          label: Text('Accept'), backgroundColor: Colors.amber),
+                      trailing: InkWell(
+                        onTap: () {
+                          toggleStatus(
+                              snapshot.data![index].product.toString());
+                        },
+                        child: Chip(
+                            label: Text('Accept'),
+                            backgroundColor: status == 'pending'
+                                ? Colors.amber
+                                : Colors.green),
+                      ),
                       subtitle: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,

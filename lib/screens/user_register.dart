@@ -51,6 +51,7 @@ class UserReg extends StatelessWidget {
     final deviceHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -101,6 +102,9 @@ class UserReg extends StatelessWidget {
                         return 'textfield is empty';
                       }
                     },
+                    keyboardType: TextInputType.multiline,
+                    minLines: 3,
+                    maxLines: 6,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), label: Text('address')),
                   ),
@@ -135,6 +139,7 @@ class UserReg extends StatelessWidget {
                         return 'password is too short';
                       }
                     },
+                    obscureText: true,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), label: Text('password')),
                   ),
@@ -151,6 +156,7 @@ class UserReg extends StatelessWidget {
                         return 'password does not match';
                       }
                     },
+                    obscureText: true,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         label: Text('confirm password')),

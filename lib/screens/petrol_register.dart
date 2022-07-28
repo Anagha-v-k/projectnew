@@ -114,7 +114,7 @@ class _PregState extends State<Preg> {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 207, 184, 201),
+      backgroundColor: Color.fromARGB(255, 251, 247, 252),
       appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -369,7 +369,7 @@ class _PregState extends State<Preg> {
                       return 'textfield is empty';
                     }
                   },
-                  // ki,eyboardType: TextInputType.phone,
+                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), label: Text('password')),
                 ),
@@ -385,8 +385,7 @@ class _PregState extends State<Preg> {
                       return 'password does not match';
                     }
                   },
-                  // obscureText: true,
-                  // keyboardType: TextInputType.phone,
+                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       label: Text('confirm password')),

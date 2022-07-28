@@ -111,6 +111,7 @@ class _WrkRegState extends State<WrkReg> {
     final deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
             child: Form(
@@ -357,6 +358,7 @@ class _WrkRegState extends State<WrkReg> {
                       return 'textfield is empty';
                     }
                   },
+                  obscureText: true,
                   // keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), label: Text('password')),
@@ -374,7 +376,7 @@ class _WrkRegState extends State<WrkReg> {
                       return 'password does not match';
                     }
                   },
-                  // keyboardType: TextInputType.phone,
+                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       label: Text('confirm password')),
