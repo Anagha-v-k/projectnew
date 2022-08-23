@@ -16,6 +16,7 @@ class ViewSpare extends StatelessWidget {
     //complete below code to view spare parts
     Response res = await get(Uri.parse(ConstantData.baseUrl + 'spare_view'));
     final List data = jsonDecode(res.body);
+    print(data.last);
     List<SpareViewModel> spare =
         data.map<SpareViewModel>((e) => SpareViewModel.fromJson(e)).toList();
 

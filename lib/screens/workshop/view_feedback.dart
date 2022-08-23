@@ -15,7 +15,7 @@ class ViewFeedback extends StatelessWidget {
   Future<List<WorkshopFeedback>> getFeedback() async {
     final spref = await SharedPreferences.getInstance();
     print(spref.getString('userid'));
-    Response res = await get(Uri.parse(ConstantData.baseUrl + 'view_feedback'));
+    Response res = await get(Uri.parse(ConstantData.baseUrl + 'add_feedback'));
     print(res.body);
     List data = jsonDecode(res.body);
     return data

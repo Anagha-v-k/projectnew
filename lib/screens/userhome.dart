@@ -11,6 +11,7 @@ import 'package:vehicleassistant/user/view_spare.dart';
 
 import '../user/chat.dart';
 import '../user/fuel.dart';
+import '../user/user_drawer.dart';
 import '../user/work.dart';
 
 class Userhome extends StatelessWidget {
@@ -19,45 +20,7 @@ class Userhome extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      drawer: Drawer(
-          child: SafeArea(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(30),
-              child: CircleAvatar(
-                radius: 100,
-                backgroundImage: NetworkImage(
-                    'https://www.globalassure.com/images/services/rsa.png'),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ViewreqFromUser()));
-                },
-                leading: Icon(Icons.history),
-                title: Text('petrol requests'),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RepairRequests()));
-                },
-                leading: Icon(Icons.history),
-                title: Text('repair requests'),
-              ),
-            ),
-          ],
-        ),
-      )),
+      drawer: UserDrawer(),
       backgroundColor: Color.fromRGBO(234, 252, 252, 1),
       appBar: AppBar(
         centerTitle: true,
@@ -107,15 +70,15 @@ class Userhome extends StatelessWidget {
                 leading: Icon(Icons.build),
                 title: Text('Nearest Workshops'),
               ),
-              ListTile(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return Chat();
-                  }));
-                },
-                leading: Icon(Icons.forum),
-                title: Text('Chat with mechanics'),
-              ),
+              // ListTile(
+              //   onTap: () {
+              //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //       return Chat();
+              //     }));
+              //   },
+              //   leading: Icon(Icons.forum),
+              //   title: Text('Chat with mechanics'),
+              // ),
               ListTile(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -125,15 +88,15 @@ class Userhome extends StatelessWidget {
                 leading: Icon(Icons.shopping_cart),
                 title: Text('Order Spare Parts'),
               ),
-              ListTile(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return Prof();
-                  }));
-                },
-                leading: Icon(Icons.person),
-                title: Text('View profile'),
-              )
+              // ListTile(
+              //   onTap: () {
+              //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //       return Prof();
+              //     }));
+              //   },
+              //   leading: Icon(Icons.person),
+              //   title: Text('View profile'),
+              // )
             ]),
           ],
         ),

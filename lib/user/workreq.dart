@@ -77,18 +77,18 @@ class Workreq extends StatelessWidget {
                     );
                   }));
                 },
-                leading: Icon(Icons.local_gas_station),
+                leading: Icon(Icons.rate_review),
                 title: Text('ratings and reviews'),
               ),
-              ListTile(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ViewSpare();
-                  }));
-                },
-                leading: Icon(Icons.build),
-                title: Text('order spareparts'),
-              ),
+              // ListTile(
+              //   onTap: () {
+              //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //       return ViewSpare();
+              //     }));
+              //   },
+              //   leading: Icon(Icons.build),
+              //   title: Text('order spareparts'),
+              // ),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: 80, vertical: deviceHeight * .01),
@@ -116,7 +116,8 @@ class Workreq extends StatelessWidget {
                     controller: nameController,
                     validator: (value) {},
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), label: Text('name'))),
+                        border: OutlineInputBorder(),
+                        label: Text('Your name'))),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(

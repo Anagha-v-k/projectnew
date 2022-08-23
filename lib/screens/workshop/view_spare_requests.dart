@@ -60,14 +60,16 @@ class _ViewSpareRequestState extends State<ViewSpareRequest> {
                     child: ListTile(
                       trailing: InkWell(
                         onTap: () {
-                          toggleStatus(
-                              snapshot.data![index].product.toString());
+                          toggleStatus(snapshot.data![index].id.toString());
                         },
                         child: Chip(
-                            label: Text('Accept'),
-                            backgroundColor: status == 'pending'
-                                ? Colors.amber
-                                : Colors.green),
+                            label: snapshot.data![index].status == 'pending'
+                                ? Text('Accepted')
+                                : Text('Accept'),
+                            backgroundColor:
+                                snapshot.data![index].status == 'pending'
+                                    ? Colors.green
+                                    : Colors.amber),
                       ),
                       subtitle: Column(
                         mainAxisSize: MainAxisSize.min,

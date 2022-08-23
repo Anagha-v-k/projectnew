@@ -34,7 +34,7 @@ class Work extends StatelessWidget {
     // print('id $id');
     double rating = 0.0;
     http.Response res =
-        await http.get(Uri.parse(ConstantData.baseUrl + 'view_feedback'));
+        await http.get(Uri.parse(ConstantData.baseUrl + 'add_feedback'));
     // print('rawfeeds ${jsonDecode(res.body)}');
     List rawFeedbacks = (jsonDecode(res.body) as List)
         .where((element) => element['workshop'].toString() == id)

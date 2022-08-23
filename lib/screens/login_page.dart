@@ -34,6 +34,7 @@ class LoginPage extends StatelessWidget {
       final spref = await SharedPreferences.getInstance();
       spref.setString('userid', data['result']['id'].toString());
       spref.setString('type', data['result']['type']);
+      spref.setString('name', data['result']['name']);
       if (data['result']['type'] == 'petrolpumb') {
         Navigator.pushReplacement(
           context,

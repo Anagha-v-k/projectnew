@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
 
+import '../Models/workshop_feedback.dart';
 import '../constants/constant_data.dart';
 import '../screens/userhome.dart';
 
@@ -24,6 +25,18 @@ class _RatingState extends State<Rating> {
 
   final ratingcontroller = TextEditingController();
   final feedbackcontroller = TextEditingController();
+
+  Future<List<WorkshopFeedback>> getFeedback() async {
+    Response res = await get(Uri.parse(ConstantData.baseUrl + 'add_feedback'));
+    print(res.body);
+    List data = jsonDecode(res.body);
+    return data
+        .map((e) => WorkshopFeedback.fromJson(e))
+        .toList()
+        .where((element) => element.workshop.toString() == widget.workshopId)
+        .toList();
+  }
+
   postfeed(BuildContext context) async {
     final spref = await SharedPreferences.getInstance();
     final param = {
@@ -71,6 +84,48 @@ class _RatingState extends State<Rating> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  height: 400,
+                  child: FutureBuilder(
+                      future: getFeedback(),
+                      builder: (context,
+                          AsyncSnapshot<List<WorkshopFeedback>> snap) {
+                        if (snap.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snap.hasData) {
+                          return ListView.builder(
+                              itemCount: snap.data!.length,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SimpleStarRating(
+                                            starCount: 5,
+                                            isReadOnly: true,
+                                            rating: double.parse(
+                                                snap.data![index].rating),
+                                          ),
+                                          Text(snap.data![index].comment),
+                                          Text(snap.data![index].date)
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              });
+                        } else {
+                          return Center(
+                            child: Text('no data'),
+                          );
+                        }
+                      }),
+                ),
                 SimpleStarRating(
                   allowHalfRating: true,
                   starCount: 5,

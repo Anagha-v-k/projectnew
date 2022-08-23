@@ -135,7 +135,8 @@ class _PregState extends State<Preg> {
                     }
                   },
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text('companyname')),
+                      border: OutlineInputBorder(),
+                      label: Text('company name')),
                 ),
               ),
               Padding(

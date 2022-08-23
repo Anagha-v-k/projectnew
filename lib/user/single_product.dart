@@ -125,18 +125,20 @@ class _SingleProductState extends State<SingleProduct> {
 
   placeOrder() async {
     SharedPreferences spref = await SharedPreferences.getInstance();
-    Response res =
-        await post(Uri.parse(ConstantData.baseUrl + 'addsparerequest'), body: {
-      'product': widget.spareViewModel.workshop.toString(),
+    final parm = {
+      'product': widget.spareViewModel.id.toString(),
       'customer': spref.get('userid'),
       'address': addressController.text,
       'pincode': pinController.text,
       'customer_name': nameController.text,
       'status': '0',
-    });
+    };
+    Response res = await post(
+        Uri.parse(ConstantData.baseUrl + 'addsparerequest'),
+        body: parm);
     final x = int.tryParse(jsonDecode(res.body)['product'].toString());
     if (x == null) {
-      Fluttertoast.showToast(msg: 'something went wrong');
+      Fluttertoast.showToast(msg: '$parm');
     } else {
       Fluttertoast.showToast(msg: 'Success');
       Navigator.pop(context);

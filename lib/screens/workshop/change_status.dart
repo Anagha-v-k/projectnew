@@ -34,6 +34,8 @@ class _ChangeStatusState extends State<ChangeStatus> {
           child: Switch(
               activeThumbImage: NetworkImage(
                   'https://previews.123rf.com/images/ionutparvu/ionutparvu1612/ionutparvu161201726/67602998-active-stamp-sign-text-word-logo-blue-.jpg'),
+              inactiveThumbImage: NetworkImage(
+                  'https://st.depositphotos.com/1561359/4354/v/450/depositphotos_43545063-stock-illustration-stamp-closed-with-red-text.jpg'),
               value: status,
               onChanged: (v) {
                 setState(() {

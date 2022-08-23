@@ -73,7 +73,7 @@ class Phome extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Padding(
-                    padding: const EdgeInsets.all(18.0),
+                    padding: const EdgeInsets.all(18.25),
                     child: InkWell(
                       onTap: (() => Navigator.push(
                             context,
@@ -83,30 +83,30 @@ class Phome extends StatelessWidget {
                           )),
                       child: Card(
                         child: Padding(
-                          padding: const EdgeInsets.all(28.0),
+                          padding: const EdgeInsets.all(28.10),
                           child: Text("View Request"),
                         ),
                       ),
                     ),
                   )),
-                  Expanded(
-                      child: Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: InkWell(
-                      onTap: (() => Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) {
-                              return Servman();
-                            }),
-                          )),
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(28.0),
-                          child: Text("Add ServiceMan"),
-                        ),
-                      ),
-                    ),
-                  )),
+                  // Expanded(
+                  //     child: Padding(
+                  //   padding: const EdgeInsets.all(18.0),
+                  //   child: InkWell(
+                  //     onTap: (() => Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(builder: (context) {
+                  //             return Servman();
+                  //           }),
+                  //         )),
+                  //     child: Card(
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.all(28.0),
+                  //         child: Text("Add ServiceMan"),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )),
                 ],
               )
             ],

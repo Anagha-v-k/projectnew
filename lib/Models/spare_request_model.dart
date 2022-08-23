@@ -1,5 +1,6 @@
 class SpareRequest {
   SpareRequest({
+    required this.id,
     required this.product,
     required this.customer,
     required this.address,
@@ -8,6 +9,7 @@ class SpareRequest {
     required this.customerName,
     required this.status,
   });
+  late final int id;
   late final int product;
   late final int customer;
   late final String address;
@@ -17,6 +19,7 @@ class SpareRequest {
   late final String status;
 
   SpareRequest.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     product = json['product'];
     customer = json['customer'];
     address = json['address'];
@@ -28,6 +31,7 @@ class SpareRequest {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['id'] = id;
     _data['product'] = product;
     _data['customer'] = customer;
     _data['address'] = address;
